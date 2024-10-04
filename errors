@@ -1,0 +1,45 @@
+unknown error
+
+root@dedic-DyvoPes:~/k8s-manifests/cluster2$ kubectl get pods
+NAME                           READY   STATUS    RESTARTS   AGE
+my-wordpress-96ff54c7f-qm5tc   0/1     Running   0          47s
+my-wordpress-mariadb-0         0/1     Running   0          46s
+
+
+root@dedic-DyvoPes:~/k8s-manifests/cluster2$  kubectl get svc
+NAME                   TYPE           CLUSTER-IP       EXTERNAL-IP    PORT(S)                      AGE
+kubernetes             ClusterIP      10.96.0.1        <none>         443/TCP                      81m
+my-wordpress           LoadBalancer   10.99.48.57      10.1.149.240   80:31177/TCP,443:32556/TCP   57s
+my-wordpress-mariadb   ClusterIP      10.100.215.253   <none>         3306/TCP                     57s
+
+
+root@dedic-DyvoPes:~/k8s-manifests/cluster2$ ping -c 1 10.99.48.57
+PING 10.99.48.57 (10.99.48.57) 56(84) bytes of data.
+From 66.85.133.129 icmp_seq=1 Packet filtered
+
+--- 10.99.48.57 ping statistics ---
+1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+
+
+
+root@dedic-DyvoPes:~/k8s-manifests/cluster2$ ping -c 1 10.1.149.240
+PING 10.1.149.240 (10.1.149.240) 56(84) bytes of data.
+From 66.85.133.129 icmp_seq=1 Packet filtered
+
+--- 10.1.149.240 ping statistics ---
+1 packets transmitted, 0 received, +1 errors, 100% packet loss, time 0ms
+
+
+
+root@dedic-DyvoPes:~/k8s-manifests/cluster2$ kubectl get pods -n metallb-system
+NAME                          READY   STATUS    RESTARTS   AGE
+controller-58859b4d4f-4fkb4   1/1     Running   0          29m
+speaker-z7f2h                 1/1     Running   0          29m
+
+
+root@dedic-DyvoPes:~/k8s-manifests/cluster2$ kubectl config get-contexts
+CURRENT   NAME       CLUSTER    AUTHINFO   NAMESPACE
+*         cluster1   cluster1   cluster1   default
+          cluster2   cluster2   cluster2   default
+          minikube   minikube   minikube   staging
+
